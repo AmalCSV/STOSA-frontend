@@ -17,488 +17,237 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
+  CForm,
+  CFormText
+
 } from '@coreui/react'
 import { DocsCallout, Example } from 'src/reusable'
 
 const Select = () => {
+  const saveMember =(target) => {
+    // call to api using id, field, value
+    console.log(3, target.value, target.id);
+    
+    try {
+      updateOne(3, target.id, target.value);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function updateOne(id, field, value) {
+   const requestOptions = {
+       method: 'PUT',
+       mode: 'cors',
+       //crossDomain:true,
+       headers: { 'Content-Type': 'application/json' },
+       body: JSON.stringify({id: id, field: field, value: value })
+   };
+   const response = await fetch('http://127.0.0.1/stosa/Member/updateOne', requestOptions);
+   const data = response.json();
+   console.log(data)
+}
   return (
-    <CRow>
-      <CCol xs={12}>
-        <DocsCallout name="Input Group" href="forms/input-group" />
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Input group</strong> <small>Basic example</small>
-          </CCardHeader>
-          <CCardBody>
-            <p className="text-medium-emphasis small">
-              Place one add-on or button on either side of an input. You may also place one on both
-              sides of an input. Remember to place <code>&lt;CFormLabel&gt;</code>s outside the
-              input group.
-            </p>
-            <Example href="forms/input-group">
-              <CInputGroup className="mb-3">
-                <CInputGroupText id="basic-addon1">@</CInputGroupText>
-                <CFormControl
-                  placeholder="Username"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
+    <div>
+      <CRow>
+        <CCol xs={6}>
+          <CCard>
+            <CCardHeader>Personal Details</CCardHeader>
+            <CCardBody>
+              <CForm>
+                <div className="mb-3">
+                  <CFormLabel htmlFor="Full Name">Full Name</CFormLabel>
+                  <CFormControl type="text" id="Full name" placeholder="Enter your Full Name" />
+                </div>
+                <div className="mb-3">
+                  <CFormLabel htmlFor="Name With Initials">Name With Initials</CFormLabel>
+                  <CFormControl type="text" id="Name With Initials" placeholder="Enter your name with initials" />
+                </div>
+                <div classname="mb-3">
+                  <CFormLabel htmlFor="Address">Address</CFormLabel>
+                  <CFormControl type="text" id="Address" placeholder="Address Line 1" /> <br></br>
+                  <CFormControl type="text" id="Address" placeholder="Address Line 2" />
+                </div>
+                <div classname="mb-3">
+                  <CFormLabel htmlFor="GN Division">GN Division</CFormLabel>
+                  <CFormControl type="text" id="GN Division" placeholder="Enter your Grama Niladari Division" />
+                </div>
+                <div classname="mb-3">
+                  <CFormLabel htmlFor="DS Division">DS Division</CFormLabel>
+                  <CFormControl type="text" id="DS Division" placeholder="Enter your Divisional Secretrait Division" />
+                </div>
+                <div classname="mb-3">
+                  <CFormLabel htmlFor="District">District</CFormLabel>
+                  <CFormControl type="text" id="District" placeholder="Enter your District" onBlur={(event) =>saveMember(event.target)} />
+                </div>
+                <div classname="mb-3">
+                  <CFormLabel htmlFor="Birthday">Date of Birth</CFormLabel>
+                  <CFormControl type="date" id="Birthday" />
+                </div>
+                <div classname="mb-3">
+                  <CFormLabel htmlFor="ID/Passport">ID/Passport number</CFormLabel>
+                  <CFormControl type="text" id="ID/Passport" placeholder="Enter your ID/Passport number" />
+                </div>
+                <div classname="mb-3">
+                  <CFormLabel htmlFor="Contact No">Contact Number</CFormLabel>
+                  <CFormControl type="tel" id="Contact No" placeholder="Home/Mobile" />
+                </div>
+                <div className="mb-3">
+                  <CFormLabel htmlFor="exampleInputEmail1">Email address</CFormLabel>
+                  <CFormControl type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="name@example.com" />
+                  <CFormText id="emailHelp">We'll never share your email with anyone else.</CFormText>
+                </div>
+                <div classname="mb-3">
+                  <CFormLabel htmlFor="Family">Family Members</CFormLabel>
+                  <CFormControl type="number" id="Family" placeholder="No.of Family Members" />
+                </div>
+                <div classname="mb-3">
+                  <CFormLabel htmlFor="T-shirt">Select T-Shirt Size</CFormLabel><br></br>
+                  <CFormCheck inline type="radio" name="inlineRadioOptions" id="inlineCheckbox1" value="option1" label="S" />
+                  <CFormCheck inline type="radio" name="inlineRadioOptions" id="inlineCheckbox2" value="option2" label="M" />
+                  <CFormCheck inline type="radio" name="inlineRadioOptions" id="inlineCheckbox3" value="option3" label="L" />
+                  <CFormCheck inline type="radio" name="inlineRadioOptions" id="inlineCheckbox3" value="option3" label="XL" />
+                </div>
+
+                <CFormCheck
+                  className="mb-3"
+                  label="Check me out"
+                  onChange={(e) => {
+                    console.log(e.target)
+                  }}
                 />
-              </CInputGroup>
-              <CInputGroup className="mb-3">
-                <CFormControl
-                  placeholder="Recipient&#39;s username"
-                  aria-label="Recipient&#39;s username"
-                  aria-describedby="basic-addon2"
+                <CButton type="submit" color="primary">
+                  Submit
+                </CButton>
+              </CForm>
+
+            </CCardBody>
+          </CCard>
+        </CCol>
+
+        <CCol xs={6}>
+          <CCard>
+            <CCardHeader>Office Details</CCardHeader>
+            <CCardBody>
+              <CForm>
+                <div className="mb-3">
+                  <CFormLabel htmlFor="Organization">Organization name</CFormLabel>
+                  <CFormControl type="text" id="Organization" placeholder="Enter Your Organization Name" />
+                </div>
+                <div className="mb-3">
+                  <CFormLabel htmlFor="Designation">Designation/Job Title</CFormLabel>
+                  <CFormControl type="text" id="Designation" placeholder="Enter Your Job Title" />
+                </div>
+                <div classname="mb-3">
+                  <CFormLabel htmlFor="Address">Address</CFormLabel>
+                  <CFormControl type="text" id="Address" placeholder="Office Address" />
+                </div>
+                <div className="mb-3">
+                  <CFormLabel htmlFor="Contact">Contact Number</CFormLabel>
+                  <CFormControl type="text" id="Contact" placeholder="Office No" />
+                </div>
+                <div className="mb-3">
+                  <CFormLabel htmlFor="exampleInputEmail1">Email address</CFormLabel>
+                  <CFormControl type="email" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                  <CFormText id="emailHelp">We'll never share your email with anyone else.</CFormText>
+                </div>
+                <CFormCheck
+                  className="mb-3"
+                  label="Check me out"
+                  onChange={(e) => {
+                    console.log(e.target)
+                  }}
                 />
-                <CInputGroupText id="basic-addon2">@example.com</CInputGroupText>
-              </CInputGroup>
-              <CFormLabel htmlFor="basic-url">Your vanity URL</CFormLabel>
-              <CInputGroup className="mb-3">
-                <CInputGroupText id="basic-addon3">https://example.com/users/</CInputGroupText>
-                <CFormControl id="basic-url" aria-describedby="basic-addon3" />
-              </CInputGroup>
-              <CInputGroup className="mb-3">
-                <CInputGroupText>$</CInputGroupText>
-                <CFormControl aria-label="Amount (to the nearest dollar)" />
-                <CInputGroupText>.00</CInputGroupText>
-              </CInputGroup>
-              <CInputGroup className="mb-3">
-                <CFormControl placeholder="Username" aria-label="Username" />
-                <CInputGroupText>@</CInputGroupText>
-                <CFormControl placeholder="Server" aria-label="Server" />
-              </CInputGroup>
-              <CInputGroup>
-                <CInputGroupText>With textarea</CInputGroupText>
-                <CFormControl component="textarea" aria-label="With textarea"></CFormControl>
-              </CInputGroup>
-            </Example>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Input group</strong> <small>Wrapping</small>
-          </CCardHeader>
-          <CCardBody>
-            <p className="text-medium-emphasis small">
-              Input groups wrap by default via <code>flex-wrap: wrap</code> in order to accommodate
-              custom form field validation within an input group. You may disable this with{' '}
-              <code>.flex-nowrap</code>.
-            </p>
-            <Example href="forms/input-group#wrapping">
-              <CInputGroup className="flex-nowrap">
-                <CInputGroupText id="addon-wrapping">@</CInputGroupText>
-                <CFormControl
-                  placeholder="Username"
-                  aria-label="Username"
-                  aria-describedby="addon-wrapping"
-                />
-              </CInputGroup>
-            </Example>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Input group</strong> <small>Sizing</small>
-          </CCardHeader>
-          <CCardBody>
-            <p className="text-medium-emphasis small">
-              Add the relative form sizing classes to the <code>&lt;CInputGroup&gt;</code> itself
-              and contents within will automatically resize—no need for repeating the form control
-              size classes on each element.
-            </p>
-            <p className="text-medium-emphasis small">
-              <strong>Sizing on the individual input group elements isn&#39;tsupported.</strong>
-            </p>
-            <Example href="forms/input-group#sizing">
-              <CInputGroup size="sm" className="mb-3">
-                <CInputGroupText id="inputGroup-sizing-sm">Small</CInputGroupText>
-                <CFormControl
-                  aria-label="Sizing example input"
-                  aria-describedby="inputGroup-sizing-sm"
-                />
-              </CInputGroup>
-              <CInputGroup className="mb-3">
-                <CInputGroupText id="inputGroup-sizing-default">Default</CInputGroupText>
-                <CFormControl
-                  aria-label="Sizing example input"
-                  aria-describedby="inputGroup-sizing-default"
-                />
-              </CInputGroup>
-              <CInputGroup size="lg">
-                <CInputGroupText id="inputGroup-sizing-lg">Large</CInputGroupText>
-                <CFormControl
-                  aria-label="Sizing example input"
-                  aria-describedby="inputGroup-sizing-lg"
-                />
-              </CInputGroup>
-            </Example>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Input group</strong> <small>Checkboxes and radios</small>
-          </CCardHeader>
-          <CCardBody>
-            <p className="text-medium-emphasis small">
-              Place any checkbox or radio option within an input group&#39;s addon instead of text.
-            </p>
-            <Example href="forms/input-group#checkboxes-and-radios">
-              <CInputGroup className="mb-3">
-                <CInputGroupText>
+                <CButton type="submit" color="primary">
+                  Submit
+                </CButton>
+              </CForm>
+            </CCardBody>
+          </CCard>
+
+          <CCol xs={12}>
+            <CCard>
+              <CCardHeader>Education Details</CCardHeader>
+              <CCardBody>
+                <CForm>
+                  <div className="mb-3">
+                    <CFormLabel htmlFor="O-Level">O-Level</CFormLabel>
+                    <CFormControl type="text" id="O-Level" placeholder="Enter your O-Level results" />
+                  </div>
+                  <div className="mb-3">
+                    <CFormLabel htmlFor="A-Level">A-Level</CFormLabel>
+                    <CFormControl type="text" id="A-Level" placeholder="Enter your A-Level results" />
+                  </div>
+                  <div classname="mb-3">
+                    <CFormLabel htmlFor="Diploma">Diploma Courses</CFormLabel>
+                    <CFormControl type="text" id="Diploma" placeholder="Enter your Diploma courses" />
+                  </div>
+                  <div className="mb-3">
+                    <CFormLabel htmlFor="Degree">Degree Courses</CFormLabel>
+                    <CFormControl type="text" id="Degree" placeholder="Enter your Degree courses" />
+                  </div>
+                  <div className="mb-3">
+                    <CFormLabel htmlFor="Graduate">Post-Graduate Courses</CFormLabel>
+                    <CFormControl type="text" id="Graduate" placeholder="Enter your Post-Graduate courses" />
+                  </div>
                   <CFormCheck
-                    type="checkbox"
-                    value=""
-                    aria-label="Checkbox for following text input"
+                    className="mb-3"
+                    label="Check me out"
+                    onChange={(e) => {
+                      console.log(e.target)
+                    }}
                   />
-                </CInputGroupText>
-                <CFormControl aria-label="Text input with checkbox" />
-              </CInputGroup>
-              <CInputGroup>
-                <CInputGroupText>
-                  <CFormCheck
-                    type="radio"
-                    value=""
-                    aria-label="Radio button for following text input"
-                  />
-                </CInputGroupText>
-                <CFormControl aria-label="Text input with radio button" />
-              </CInputGroup>
-            </Example>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Input group</strong> <small>Multiple inputs</small>
-          </CCardHeader>
-          <CCardBody>
-            <p className="text-medium-emphasis small">
-              While multiple <code>&lt;CFormControl&gt;</code>s are supported visually, validation
-              styles are only available for input groups with a single{' '}
-              <code>&lt;CFormControl&gt;</code>.
-            </p>
-            <Example href="forms/input-group#multiple-inputs">
-              <CInputGroup>
-                <CInputGroupText>First and last name</CInputGroupText>
-                <CFormControl aria-label="First name" />
-                <CFormControl aria-label="Last name" />
-              </CInputGroup>
-            </Example>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Input group</strong> <small>Multiple addons</small>
-          </CCardHeader>
-          <CCardBody>
-            <p className="text-medium-emphasis small">
-              Multiple add-ons are supported and can be mixed with checkbox and radio input
-              versions..
-            </p>
-            <Example href="forms/input-group#multiple-addons">
-              <CInputGroup className="mb-3">
-                <CInputGroupText>$</CInputGroupText>
-                <CInputGroupText>0.00</CInputGroupText>
-                <CFormControl aria-label="Dollar amount (with dot and two decimal places)" />
-              </CInputGroup>
-              <CInputGroup>
-                <CFormControl aria-label="Dollar amount (with dot and two decimal places)" />
-                <CInputGroupText>$</CInputGroupText>
-                <CInputGroupText>0.00</CInputGroupText>
-              </CInputGroup>
-            </Example>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Input group</strong> <small>Button addons</small>
-          </CCardHeader>
-          <CCardBody>
-            <p className="text-medium-emphasis small">
-              Multiple add-ons are supported and can be mixed with checkbox and radio input
-              versions..
-            </p>
-            <Example href="forms/input-group#button-addons">
-              <CInputGroup className="mb-3">
-                <CButton type="button" color="secondary" variant="outline" id="button-addon1">
-                  Button
-                </CButton>
-                <CFormControl
-                  placeholder=""
-                  aria-label="Example text with button addon"
-                  aria-describedby="button-addon1"
-                />
-              </CInputGroup>
-              <CInputGroup className="mb-3">
-                <CFormControl
-                  placeholder="Recipient's username"
-                  aria-label="Recipient's username"
-                  aria-describedby="button-addon2"
-                />
-                <CButton type="button" color="secondary" variant="outline" id="button-addon2">
-                  Button
-                </CButton>
-              </CInputGroup>
-              <CInputGroup className="mb-3">
-                <CButton type="button" color="secondary" variant="outline">
-                  Button
-                </CButton>
-                <CButton type="button" color="secondary" variant="outline">
-                  Button
-                </CButton>
-                <CFormControl placeholder="" aria-label="Example text with two button addons" />
-              </CInputGroup>
-              <CInputGroup>
-                <CFormControl
-                  placeholder="Recipient's username"
-                  aria-label="Recipient's username with two button addons"
-                />
-                <CButton type="button" color="secondary" variant="outline">
-                  Button
-                </CButton>
-                <CButton type="button" color="secondary" variant="outline">
-                  Button
-                </CButton>
-              </CInputGroup>
-            </Example>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Input group</strong> <small>Buttons with dropdowns</small>
-          </CCardHeader>
-          <CCardBody>
-            <Example href="forms/input-group#buttons-with-dropdowns">
-              <CInputGroup className="mb-3">
-                <CDropdown variant="input-group">
-                  <CDropdownToggle color="secondary" variant="outline">
-                    Dropdown
-                  </CDropdownToggle>
-                  <CDropdownMenu>
-                    <CDropdownItem href="#">Action</CDropdownItem>
-                    <CDropdownItem href="#">Another action</CDropdownItem>
-                    <CDropdownItem href="#">Something else here</CDropdownItem>
-                    <CDropdownDivider />
-                    <CDropdownItem href="#">Separated link</CDropdownItem>
-                  </CDropdownMenu>
-                </CDropdown>
-                <CFormControl aria-label="Text input with dropdown button" />
-              </CInputGroup>
-              <CInputGroup className="mb-3">
-                <CFormControl aria-label="Text input with dropdown button" />
-                <CDropdown alignment="end" variant="input-group">
-                  <CDropdownToggle color="secondary" variant="outline">
-                    Dropdown
-                  </CDropdownToggle>
-                  <CDropdownMenu>
-                    <CDropdownItem href="#">Action</CDropdownItem>
-                    <CDropdownItem href="#">Another action</CDropdownItem>
-                    <CDropdownItem href="#">Something else here</CDropdownItem>
-                    <CDropdownDivider />
-                    <CDropdownItem href="#">Separated link</CDropdownItem>
-                  </CDropdownMenu>
-                </CDropdown>
-              </CInputGroup>
-              <CInputGroup>
-                <CDropdown variant="input-group">
-                  <CDropdownToggle color="secondary" variant="outline">
-                    Dropdown
-                  </CDropdownToggle>
-                  <CDropdownMenu>
-                    <CDropdownItem href="#">Action</CDropdownItem>
-                    <CDropdownItem href="#">Another action</CDropdownItem>
-                    <CDropdownItem href="#">Something else here</CDropdownItem>
-                    <CDropdownDivider />
-                    <CDropdownItem href="#">Separated link</CDropdownItem>
-                  </CDropdownMenu>
-                </CDropdown>
-                <CFormControl aria-label="Text input with 2 dropdown buttons" />
-                <CDropdown alignment="end" variant="input-group">
-                  <CDropdownToggle color="secondary" variant="outline">
-                    Dropdown
-                  </CDropdownToggle>
-                  <CDropdownMenu>
-                    <CDropdownItem href="#">Action</CDropdownItem>
-                    <CDropdownItem href="#">Another action</CDropdownItem>
-                    <CDropdownItem href="#">Something else here</CDropdownItem>
-                    <CDropdownDivider />
-                    <CDropdownItem href="#">Separated link</CDropdownItem>
-                  </CDropdownMenu>
-                </CDropdown>
-              </CInputGroup>
-            </Example>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Input group</strong> <small>Segmented buttons</small>
-          </CCardHeader>
-          <CCardBody>
-            <Example href="forms/input-group#segmented-buttons">
-              <CInputGroup className="mb-3">
-                <CDropdown variant="input-group">
-                  <CButton type="button" color="secondary" variant="outline">
-                    Action
+                  <CButton type="submit" color="primary">
+                    Submit
                   </CButton>
-                  <CDropdownToggle color="secondary" variant="outline" split />
-                  <CDropdownMenu>
-                    <CDropdownItem href="#">Action</CDropdownItem>
-                    <CDropdownItem href="#">Another action</CDropdownItem>
-                    <CDropdownItem href="#">Something else here</CDropdownItem>
-                    <CDropdownDivider />
-                    <CDropdownItem href="#">Separated link</CDropdownItem>
-                  </CDropdownMenu>
-                </CDropdown>
-                <CFormControl aria-label="Text input with segmented dropdown button" />
-              </CInputGroup>
-              <CInputGroup>
-                <CFormControl aria-label="Text input with segmented dropdown button" />
-                <CDropdown alignment="end" variant="input-group">
-                  <CButton type="button" color="secondary" variant="outline">
-                    Action
-                  </CButton>
-                  <CDropdownToggle color="secondary" variant="outline" split />
-                  <CDropdownMenu>
-                    <CDropdownItem href="#">Action</CDropdownItem>
-                    <CDropdownItem href="#">Another action</CDropdownItem>
-                    <CDropdownItem href="#">Something else here</CDropdownItem>
-                    <CDropdownDivider />
-                    <CDropdownItem href="#">Separated link</CDropdownItem>
-                  </CDropdownMenu>
-                </CDropdown>
-              </CInputGroup>
-            </Example>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Input group</strong> <small>Custom select</small>
-          </CCardHeader>
-          <CCardBody>
-            <Example href="forms/input-group#custom-select">
-              <CInputGroup className="mb-3">
-                <CInputGroupText component="label" htmlFor="inputGroupSelect01">
-                  Options
-                </CInputGroupText>
-                <CFormSelect id="inputGroupSelect01">
-                  <option>Choose...</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </CFormSelect>
-              </CInputGroup>
-              <CInputGroup className="mb-3">
-                <CFormSelect id="inputGroupSelect02">
-                  <option>Choose...</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </CFormSelect>
-                <CInputGroupText component="label" htmlFor="inputGroupSelect02">
-                  Options
-                </CInputGroupText>
-              </CInputGroup>
-              <CInputGroup className="mb-3">
-                <CButton type="button" color="secondary" variant="outline">
-                  Button
-                </CButton>
-                <CFormSelect id="inputGroupSelect03" aria-label="Example select with button addon">
-                  <option>Choose...</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </CFormSelect>
-              </CInputGroup>
-              <CInputGroup>
-                <CFormSelect id="inputGroupSelect04" aria-label="Example select with button addon">
-                  <option>Choose...</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </CFormSelect>
-                <CButton type="button" color="secondary" variant="outline">
-                  Button
-                </CButton>
-              </CInputGroup>
-            </Example>
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>React Input group</strong> <small>Custom file input</small>
-          </CCardHeader>
-          <CCardBody>
-            <Example href="forms/input-group#custom-file-input">
-              <CInputGroup className="mb-3">
-                <CInputGroupText component="label" htmlFor="inputGroupFile01">
-                  Upload
-                </CInputGroupText>
-                <CFormControl type="file" id="inputGroupFile01" />
-              </CInputGroup>
-              <CInputGroup className="mb-3">
-                <CFormControl type="file" id="inputGroupFile02" />
-                <CInputGroupText component="label" htmlFor="inputGroupFile02">
-                  Upload
-                </CInputGroupText>
-              </CInputGroup>
-              <CInputGroup className="mb-3">
-                <CButton
-                  type="button"
-                  color="secondary"
-                  variant="outline"
-                  id="inputGroupFileAddon03"
-                >
-                  Button
-                </CButton>
-                <CFormControl
-                  type="file"
-                  id="inputGroupFile03"
-                  aria-describedby="inputGroupFileAddon03"
-                  aria-label="Upload"
-                />
-              </CInputGroup>
-              <CInputGroup>
-                <CFormControl
-                  type="file"
-                  id="inputGroupFile04"
-                  aria-describedby="inputGroupFileAddon04"
-                  aria-label="Upload"
-                />
-                <CButton
-                  type="button"
-                  color="secondary"
-                  variant="outline"
-                  id="inputGroupFileAddon04"
-                >
-                  Button
-                </CButton>
-              </CInputGroup>
-            </Example>
-          </CCardBody>
-        </CCard>
-      </CCol>
-    </CRow>
+                </CForm>
+              </CCardBody>
+            </CCard>
+          </CCol>
+        </CCol>
+
+        <CCol xs={12}>
+          <CCard >
+            <CCardHeader>Scouting Details</CCardHeader>
+            <CCardBody>
+              <CForm>
+                <CRow className="mb-3">
+                  <CFormLabel htmlFor="Name" className="col-sm-2 col-form-label">Name</CFormLabel>
+                  <CCol sm={10} >
+                    <CFormControl type="text" id="Name" placeholder="Name of Student" />
+                  </CCol>
+                </CRow>
+                <CRow className="mb-3">
+                  <CFormLabel htmlFor="School" className="col-sm-2 col-form-label">School Admission Year</CFormLabel>
+                  <CCol sm={10} >
+                    <CFormControl type="text" id="School" />
+                  </CCol>
+                </CRow>
+                <CRow className="mb-3">
+                  <CFormLabel htmlFor="Date Joined" className="col-sm-2 col-form-label">Date Joined for Scouting</CFormLabel>
+                  <CCol sm={10} >
+                    <CFormControl type="Date" id="Date Joined" />
+                  </CCol>
+                </CRow>
+                <CRow className="mb-3">
+                  <CFormLabel htmlFor="Badges" className="col-sm-2 col-form-label">School Admission Year</CFormLabel>
+                  <CCol sm={10} >
+                    <CFormControl type="text" id="Badges" />
+                  </CCol>
+                </CRow>
+                <CRow className="mb-3">
+                  <CFormLabel htmlFor="Awards" className="col-sm-2 col-form-label">Awards</CFormLabel>
+                  <CCol sm={10} >
+                    <CFormControl type="text" id="Awards" />
+                  </CCol>
+                </CRow>
+
+              </CForm>
+            </CCardBody>
+          </CCard>
+        </CCol>
+      </CRow>
+    </div>
   )
 }
 
